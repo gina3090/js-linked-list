@@ -29,7 +29,7 @@ function linkedListGenerator() {
       value: newValue,
       next: null
     };
-    if(tail === null) { //checking for an empty list
+    if(tail === null) {
       head = newNode;
     } else {
       tail.next = newNode;
@@ -41,7 +41,7 @@ function linkedListGenerator() {
     var currNode = getHead();
     var count = 0;
     while(count < index){
-      if(currNode.next !== null){
+      if(currNode.next !== null) {
         currNode = currNode.next;
         count++;  
       } else {
@@ -51,12 +51,34 @@ function linkedListGenerator() {
     return currNode;
   }
 
-  function remove(index) {
-    
+  function remove(index) { 
+    var currNode = get(index);
+    var prevNode = get(index - 1);
+    if(index === 0){
+      head = head.next;
+    } else if(currNode.next === null) {
+      prevNode.next = null;
+    } else if(currNode === false) {
+      return false;
+    } else {
+      prevNode.next = currNode.next;
+    } 
   }
 
-  function insert(value, index) {
-    
+  function insert(newValue, index) {
+    var currNode = get(index);
+    var prevNode = get(index - 1);
+    var newNode = {
+      value: newValue,
+      next: currNode
+    };
+    if(index === 0){
+      head = newNode;
+    } else if(currNode === false) {
+      return false;
+    } else {
+      prevNode.next = newNode;
+    }
   }
 
   return {
@@ -68,12 +90,3 @@ function linkedListGenerator() {
     insert: insert
   };
 }
-
-var ll = linkedListGenerator();
-ll.add("kitten");
-ll.add("puppy");
-ll.add("chick");
-var theHead = ll.getHead();
-var theTail = ll.getTail();
-console.log(theHead);
-console.log(theTail);
