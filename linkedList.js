@@ -12,7 +12,7 @@ function linkedListGenerator() {
   }
 
   function getTail() {
-    var currNode = head;
+    let currNode = head;
     while(currNode !== null) {
       if(currNode.next !== null) {
         currNode = currNode.next;
@@ -24,8 +24,8 @@ function linkedListGenerator() {
   }
 
   function add(newValue) {
-    var tail = getTail();
-    var newNode = {
+    let tail = getTail();
+    let newNode = {
       value: newValue,
       next: null
     };
@@ -38,12 +38,12 @@ function linkedListGenerator() {
   }
 
   function get(index) {
-    var currNode = getHead();
-    var count = 0;
-    while(count < index){
+    let currNode = getHead();
+    let length = 0;
+    while(length < index){
       if(currNode.next !== null) {
         currNode = currNode.next;
-        count++;  
+        length++;  
       } else {
         return false;
       }
@@ -52,8 +52,8 @@ function linkedListGenerator() {
   }
 
   function remove(index) { 
-    var currNode = get(index);
-    var prevNode = get(index - 1);
+    let currNode = get(index);
+    let prevNode = get(index - 1);
     if(index === 0){
       head = head.next;
     } else if(currNode.next === null) {
@@ -65,19 +65,37 @@ function linkedListGenerator() {
     } 
   }
 
-  function insert(newValue, index) {
-    var currNode = get(index);
-    var prevNode = get(index - 1);
-    var newNode = {
-      value: newValue,
-      next: currNode
-    };
-    if(index === 0){
-      head = newNode;
-    } else if(currNode === false) {
-      return false;
+  function _getLength() {
+    let length = 0;
+    let node = head;
+    if(head === null){
+      return 0;
     } else {
+      length = 1;
+    }
+    while(node.next !== null){
+      length++;
+      node = node.next;
+    }
+    return length;
+  }
+
+  function insert(value, index) {
+     let newNode = {
+        value: value,
+        next: null
+      };
+    if(index < 0 || index > _getLength()) {
+      return false;
+    } else if(index === 0) {
+      let nextNode = getHead();
+      newNode.next = nextNode;
+      head = newNode;
+    } else {
+      let prevNode = get(index - 1);
+      let nextNode = prevNode.next;
       prevNode.next = newNode;
+      newNode.next = nextNode;
     }
   }
 
